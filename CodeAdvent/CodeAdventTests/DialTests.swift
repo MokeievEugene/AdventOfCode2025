@@ -13,7 +13,7 @@ struct DialTests {
     
     @Test func testSimpleRotations() {
         var dial = Dial(position: 50)
-        let fileURL = Bundle.main.url(forResource: "testInput", withExtension: "txt")!
+        let fileURL = Bundle.main.url(forResource: "testCommandInput", withExtension: "txt")!
         let fileContents = try? String(contentsOf: fileURL, encoding: .utf8)
         let commandArray = fileContents?.split(separator: "\n").map { String($0) } ?? []
         let numberOfZeros = dial.rotate(with: commandArray)

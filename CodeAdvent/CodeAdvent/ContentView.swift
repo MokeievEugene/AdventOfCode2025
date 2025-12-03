@@ -9,18 +9,28 @@ import SwiftUI
 
 struct ContentView: View {
     let viewModel = ContentViewModel()
-    @State var calculatedPassword: Int?
+    @State var dialPassword: Int?
+    @State var invalidIDSum: Int?
     
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
             Text("ADVENT OF CODING 2025")
             Button {
-                calculatedPassword = viewModel.calculateDialPassword()
+                dialPassword = viewModel.calculateDialPassword()
             } label: {
                 HStack {
                     Text("DAY 1")
                     Spacer()
-                    calculatedPassword != nil ? Text("Calculated password: \( calculatedPassword ?? 0)") : Text("Calculate password")
+                    dialPassword != nil ? Text("Calculated password: \( dialPassword ?? 0)") : Text("Calculate password")
+                }
+            }
+            Button {
+                invalidIDSum = viewModel.calculateInvalidIDSum()
+            } label: {
+                HStack {
+                    Text("DAY 2")
+                    Spacer()
+                    invalidIDSum != nil ? Text("Calculated invalid id sum: \( invalidIDSum ?? 0)") : Text("Calculate invalid id sum")
                 }
             }
         }

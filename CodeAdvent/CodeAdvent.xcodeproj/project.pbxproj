@@ -33,16 +33,27 @@
 		13FC6E402EE070670016C9DC /* Exceptions for "CodeAdvent" folder in "CodeAdventTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Resources/testInput.txt,
+				Resources/testCommandInput.txt,
 			);
 			target = 13FC6E142EE064260016C9DC /* CodeAdventTests */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		13FC6E672EE0820D0016C9DC /* Exceptions for "CodeAdvent" folder in "Compile Sources" phase from "CodeAdvent" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 13FC6E042EE064250016C9DC /* Sources */;
+			membershipExceptions = (
+				Resources/giftProductIDs.txt,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		13FC6E0A2EE064250016C9DC /* CodeAdvent */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				13FC6E672EE0820D0016C9DC /* Exceptions for "CodeAdvent" folder in "Compile Sources" phase from "CodeAdvent" target */,
 				13FC6E402EE070670016C9DC /* Exceptions for "CodeAdvent" folder in "CodeAdventTests" target */,
 			);
 			path = CodeAdvent;
