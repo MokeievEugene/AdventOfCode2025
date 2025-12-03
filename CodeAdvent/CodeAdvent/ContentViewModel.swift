@@ -9,7 +9,7 @@ import Foundation
 
 struct ContentViewModel {
     
-    func calculatePassword() -> Int {
+    func calculateDialPassword() -> Int {
         let fileURL = Bundle.main.url(forResource: "input", withExtension: "txt")!
         let fileContents = try? String(contentsOf: fileURL, encoding: .utf8)
         let commandArray = fileContents?.split(separator: "\n").map { String($0) } ?? []

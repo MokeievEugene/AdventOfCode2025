@@ -12,11 +12,16 @@ struct ContentView: View {
     @State var calculatedPassword: Int?
     
     var body: some View {
-        VStack {
+        VStack(alignment: .center, spacing: 10) {
+            Text("ADVENT OF CODING 2025")
             Button {
-                calculatedPassword = viewModel.calculatePassword()
+                calculatedPassword = viewModel.calculateDialPassword()
             } label: {
-                calculatedPassword != nil ? Text("Calculated password:\( calculatedPassword ?? 0)") : Text("Calculate password")
+                HStack {
+                    Text("DAY 1")
+                    Spacer()
+                    calculatedPassword != nil ? Text("Calculated password: \( calculatedPassword ?? 0)") : Text("Calculate password")
+                }
             }
         }
         .padding()
