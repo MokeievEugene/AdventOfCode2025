@@ -13,10 +13,12 @@ struct ContentView: View {
     @State var invalidIDSum: Int?
     @State var totalJoltageMax2: Int?
     @State var totalJoltageMax12: Int?
+    @State var accessibleRollsOfPaper: Int?
     
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
             Text("🎅 ADVENT OF CODING 2025 🎄")
+                .foregroundStyle(.green)
             dayView(
                 dayNumber: 1,
                 valueName: "dial password",
@@ -47,8 +49,16 @@ struct ContentView: View {
             ) {
                 totalJoltageMax12 = viewModel.calculateTotalJoltageMax12()
             }
+            dayView(
+                dayNumber: 4,
+                valueName: "accessible rolls of paper",
+                value: accessibleRollsOfPaper
+            ) {
+                accessibleRollsOfPaper = viewModel.calculateAccessibleRollsOfPaper()
+            }
         }
-        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.white)
     }
     
     private func dayView(
@@ -65,7 +75,7 @@ struct ContentView: View {
                     Text(", PART \(partNumber)")
                 }
             }
-            .foregroundColor(.red)
+            .foregroundStyle(.red)
             Button {
                 action()
             } label: {

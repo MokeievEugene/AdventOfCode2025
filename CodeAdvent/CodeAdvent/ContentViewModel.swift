@@ -55,6 +55,12 @@ struct ContentViewModel {
         return totalJoltage
     }
     
+    func calculateAccessibleRollsOfPaper() -> Int {
+        guard let fileContents = loadFile(name: "rolls", fileExtension: "txt") else { return 0 }
+        let matrix = PaperMatrix(rawString: fileContents)
+        return matrix.totalAccessibleRollsOfPaper
+    }
+    
     // MARK: - Private
     private func loadFile(name: String, fileExtension: String) -> String? {
         let fileURL = Bundle.main.url(forResource: name, withExtension: fileExtension)!
