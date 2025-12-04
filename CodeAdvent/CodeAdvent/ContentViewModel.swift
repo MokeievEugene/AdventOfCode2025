@@ -16,6 +16,13 @@ struct ContentViewModel {
         return dial.rotate(with: commandArray)
     }
     
+    func calculateDialHardPassword() -> Int {
+        guard let fileContents = loadFile(name: "commandInput", fileExtension: "txt") else { return 0 }
+        let commandArray = fileContents.split(separator: "\n").map { String($0) }
+        var dial = Dial(position: 50)
+        return dial.rotate(with: commandArray, hardMode: true)
+    }
+    
     func calculateInvalidIDSum() -> Int {
         guard var fileContents = loadFile(name: "giftProductIDs", fileExtension: "txt") else { return 0 }
         fileContents = String(fileContents.dropLast(1))

@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     let viewModel = ContentViewModel()
     @State var dialPassword: Int?
+    @State var dialHardPassword: Int?
     @State var invalidIDSum: Int?
     @State var totalJoltageMax2: Int?
     @State var totalJoltageMax12: Int?
@@ -22,10 +23,19 @@ struct ContentView: View {
                 .foregroundStyle(.green)
             dayView(
                 dayNumber: 1,
+                partNumber: 1,
                 valueName: "dial password",
                 value: dialPassword
             ) {
                 dialPassword = viewModel.calculateDialPassword()
+            }
+            dayView(
+                dayNumber: 1,
+                partNumber: 2,
+                valueName: "dial hard password",
+                value: dialHardPassword
+            ) {
+                dialHardPassword = viewModel.calculateDialHardPassword()
             }
             dayView(
                 dayNumber: 2,

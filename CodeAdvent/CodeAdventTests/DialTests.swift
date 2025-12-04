@@ -11,7 +11,7 @@ import Foundation
 
 struct DialTests {
     
-    @Test func testSimpleRotations() {
+    @Test func testCommandSetRotations() {
         var dial = Dial(position: 50)
         let fileURL = Bundle.main.url(forResource: "testCommandInput", withExtension: "txt")!
         let fileContents = try? String(contentsOf: fileURL, encoding: .utf8)
@@ -21,15 +21,17 @@ struct DialTests {
         #expect(numberOfZeros == 3)
     }
     
-    @Test func testCommandSetRotations1() {
-        var dial = Dial(position: 5)
-        dial.rotate(rotation: .left, number: 10)
-        #expect(dial.position == 95)
-        dial.rotate(rotation: .right, number: 5)
-        #expect(dial.position == 0)
+    @Test func testCommandSetRotationsHard() {
+        var dial = Dial(position: 50)
+        let fileURL = Bundle.main.url(forResource: "testCommandInput", withExtension: "txt")!
+        let fileContents = try? String(contentsOf: fileURL, encoding: .utf8)
+        let commandArray = fileContents?.split(separator: "\n").map { String($0) } ?? []
+        let numberOfZeros = dial.rotate(with: commandArray, hardMode: true)
+        #expect(dial.position == 32)
+        #expect(numberOfZeros == 6)
     }
     
-    @Test func testCommandSetRotations2() {
+    @Test func testRotations() {
         var dial = Dial(position: 50)
         dial.rotate(rotation: .left, number: 68)
         #expect(dial.position == 82)
@@ -43,5 +45,13 @@ struct DialTests {
         #expect(dial.position == 55)
         dial.rotate(rotation: .left, number: 55)
         #expect(dial.position == 0)
+    }
+    
+    @Test func testCrazyRotations1() {
+        var dial = Dial(position: 5)
+        dial.rotate(rotation: .left, number: 346)
+        #expect(dial.position == 41)
+        dial.rotate(rotation: .right, number: 746)
+        #expect(dial.position == 87)
     }
 }
