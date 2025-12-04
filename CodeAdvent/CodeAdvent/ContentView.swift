@@ -14,6 +14,7 @@ struct ContentView: View {
     @State var totalJoltageMax2: Int?
     @State var totalJoltageMax12: Int?
     @State var accessibleRollsOfPaper: Int?
+    @State var removableRollsOfPaper: Int?
     
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
@@ -51,10 +52,19 @@ struct ContentView: View {
             }
             dayView(
                 dayNumber: 4,
+                partNumber: 1,
                 valueName: "accessible rolls of paper",
                 value: accessibleRollsOfPaper
             ) {
                 accessibleRollsOfPaper = viewModel.calculateAccessibleRollsOfPaper()
+            }
+            dayView(
+                dayNumber: 4,
+                partNumber: 2,
+                valueName: "removable rolls of paper",
+                value: removableRollsOfPaper
+            ) {
+                removableRollsOfPaper = viewModel.calculateRemovableRollsOfPaper()
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

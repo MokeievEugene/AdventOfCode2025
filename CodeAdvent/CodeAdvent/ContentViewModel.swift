@@ -63,6 +63,13 @@ struct ContentViewModel {
         return result
     }
     
+    func calculateRemovableRollsOfPaper() -> Int {
+        guard let fileContents = loadFile(name: "rolls", fileExtension: "txt") else { return 0 }
+        let matrix = PaperMatrix(rawString: fileContents)
+        let cleaner = MatrixCleaner(matrix: matrix)
+        return cleaner.cleanAllRemovableRollsOfPaper()
+    }
+    
     // MARK: - Private
     private func loadFile(name: String, fileExtension: String) -> String? {
         let fileURL = Bundle.main.url(forResource: name, withExtension: fileExtension)!
