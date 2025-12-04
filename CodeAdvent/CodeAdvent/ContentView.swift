@@ -11,30 +11,74 @@ struct ContentView: View {
     let viewModel = ContentViewModel()
     @State var dialPassword: Int?
     @State var invalidIDSum: Int?
+    @State var totalJoltageMax2: Int?
+    @State var totalJoltageMax12: Int?
     
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Text("ADVENT OF CODING 2025")
-            Button {
+            Text("🎅 ADVENT OF CODING 2025 🎄")
+            dayView(
+                dayNumber: 1,
+                valueName: "dial password",
+                value: dialPassword
+            ) {
                 dialPassword = viewModel.calculateDialPassword()
-            } label: {
-                HStack {
-                    Text("DAY 1")
-                    Spacer()
-                    dialPassword != nil ? Text("Calculated password: \( dialPassword ?? 0)") : Text("Calculate password")
-                }
             }
-            Button {
+            dayView(
+                dayNumber: 2,
+                valueName: "invalid id sum",
+                value: invalidIDSum
+            ) {
                 invalidIDSum = viewModel.calculateInvalidIDSum()
-            } label: {
-                HStack {
-                    Text("DAY 2")
-                    Spacer()
-                    invalidIDSum != nil ? Text("Calculated invalid id sum: \( invalidIDSum ?? 0)") : Text("Calculate invalid id sum")
-                }
+            }
+            dayView(
+                dayNumber: 3,
+                partNumber: 1,
+                valueName: "total joltage",
+                value: totalJoltageMax2
+            ) {
+                totalJoltageMax2 = viewModel.calculateTotalJoltageMax2()
+            }
+            dayView(
+                dayNumber: 3,
+                partNumber: 2,
+                valueName: "total joltage",
+                value: totalJoltageMax12
+            ) {
+                totalJoltageMax12 = viewModel.calculateTotalJoltageMax12()
             }
         }
         .padding()
+    }
+    
+    private func dayView(
+        dayNumber: Int,
+        partNumber: Int? = nil,
+        valueName: String,
+        value: Int?,
+        action: @escaping () -> Void
+    ) -> some View {
+        VStack {
+            HStack(spacing: 0) {
+                Text("DAY \(dayNumber)")
+                if let partNumber {
+                    Text(", PART \(partNumber)")
+                }
+            }
+            .foregroundColor(.red)
+            Button {
+                action()
+            } label: {
+                Text("Calculate \(valueName)")
+            }
+            HStack(spacing: 0) {
+                Text("Result: ")
+                if value != nil {
+                    Text("\(value ?? 0)")
+                        .textSelection(.enabled)
+                }
+            }
+        }
     }
 }
 
