@@ -36,7 +36,7 @@ struct PaperMatrixTests {
     }
     
     @Test func testAccessibleRolls() {
-        let matrix = PaperMatrix(
+        var matrix = PaperMatrix(
             rawString: """
                      ..@@.@@@@.
                      @@@.@.@.@@
@@ -50,6 +50,17 @@ struct PaperMatrixTests {
                      @.@.@@@.@.
                      """
         )
-        #expect(matrix.totalAccessibleRollsOfPaper == 13)
+        #expect(matrix.totalAccessibleRollsOfPaper() == 13)
+    }
+    
+    @Test func testAccessibleRolls2() {
+        var matrix = PaperMatrix(
+            rawString: """
+                     ...@@@@@@@@@@@@.@@@@@@@
+                     @@@@@.@.@@@@@@@@.@@@@..
+                     .@@.@.@@@@@.@.....@@.@@
+                     """
+        )
+        #expect(matrix.totalAccessibleRollsOfPaper() == 11)
     }
 }

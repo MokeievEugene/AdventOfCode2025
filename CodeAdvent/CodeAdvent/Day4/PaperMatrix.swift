@@ -8,19 +8,22 @@
 struct PaperMatrix {
     let content: [String]
     let rowLength: Int
+    private var visualizerMatrix = [String]()
     
     init(rawString: String) {
         let rowsArray = rawString.split(separator: "\n").map { String($0) }
         self.content = rowsArray.joined().map { String($0) }
+        self.visualizerMatrix = content
         self.rowLength = rowsArray[0].count
     }
     
-    var totalAccessibleRollsOfPaper: Int {
+    mutating func totalAccessibleRollsOfPaper() -> Int {
         var totalAccessibleRolls = 0
         for index in 0..<content.count {
             let cellContent = content[index]
             if cellContent == "@" {
                 if adjacentRollsOfPaper(for: index) < 4 {
+                    self.visualizerMatrix[index] = "x"
                     totalAccessibleRolls += 1
                 }
             }
@@ -78,9 +81,19 @@ struct PaperMatrix {
     
     func rowBoundaries(for index: Int) -> (left: Int, right: Int) {
         let row = index / rowLength
-        let leftIndex = row * 10
-        let rightIndex = leftIndex + 9
+        let leftIndex = row * rowLength
+        let rightIndex = leftIndex + rowLength - 1
         return (leftIndex, rightIndex)
+    }
+    
+    var visualizedContent: String {
+        var content = visualizerMatrix
+        for index in 0...visualizerMatrix.count - 1 {
+            if (index + 1) % rowLength == 0 {
+                content.insert("\n", at: index)
+            }
+        }
+        return content.joined()
     }
 }
 

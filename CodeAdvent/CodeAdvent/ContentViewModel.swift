@@ -57,13 +57,25 @@ struct ContentViewModel {
     
     func calculateAccessibleRollsOfPaper() -> Int {
         guard let fileContents = loadFile(name: "rolls", fileExtension: "txt") else { return 0 }
-        let matrix = PaperMatrix(rawString: fileContents)
-        return matrix.totalAccessibleRollsOfPaper
+        var matrix = PaperMatrix(rawString: fileContents)
+        let result = matrix.totalAccessibleRollsOfPaper()
+        writeOutput(content: matrix.visualizedContent)
+        return result
     }
     
     // MARK: - Private
     private func loadFile(name: String, fileExtension: String) -> String? {
         let fileURL = Bundle.main.url(forResource: name, withExtension: fileExtension)!
         return try? String(contentsOf: fileURL, encoding: .utf8)
+    }
+    
+    private func writeOutput(content: String) {
+        let filename = getDocumentsDirectory().appendingPathComponent("output.txt")
+        try? content.write(to: filename, atomically: true, encoding: String.Encoding.utf8)
+    }
+    
+    private func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
     }
 }
