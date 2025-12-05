@@ -12,6 +12,7 @@ struct ContentView: View {
     @State var dialPassword: Int?
     @State var dialHardPassword: Int?
     @State var invalidIDSum: Int?
+    @State var complexInvalidIDSum: Int?
     @State var totalJoltageMax2: Int?
     @State var totalJoltageMax12: Int?
     @State var accessibleRollsOfPaper: Int?
@@ -39,10 +40,19 @@ struct ContentView: View {
             }
             dayView(
                 dayNumber: 2,
+                partNumber: 1,
                 valueName: "invalid id sum",
                 value: invalidIDSum
             ) {
                 invalidIDSum = viewModel.calculateInvalidIDSum()
+            }
+            dayView(
+                dayNumber: 2,
+                partNumber: 2,
+                valueName: "invalid id sum",
+                value: complexInvalidIDSum
+            ) {
+                complexInvalidIDSum = viewModel.calculateComplexInvalidIDSum()
             }
             dayView(
                 dayNumber: 3,

@@ -30,7 +30,20 @@ struct ContentViewModel {
         var invalidIDSum = 0
         rangeArray.forEach { rawRange in
             let range = ProductIDRange(rawString: rawRange)
-            invalidIDSum += range.invalidIDSum
+            invalidIDSum += range.invalidIDSum()
+        }
+        
+        return invalidIDSum
+    }
+    
+    func calculateComplexInvalidIDSum() -> Int {
+        guard var fileContents = loadFile(name: "giftProductIDs", fileExtension: "txt") else { return 0 }
+        fileContents = String(fileContents.dropLast(1))
+        let rangeArray = fileContents.split(separator: ",").map { String($0) }
+        var invalidIDSum = 0
+        rangeArray.forEach { rawRange in
+            let range = ProductIDRange(rawString: rawRange)
+            invalidIDSum += range.invalidIDSum(isComplexPattern: true)
         }
         
         return invalidIDSum

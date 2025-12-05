@@ -15,19 +15,34 @@ struct ProductIDRange {
         finish = Int(components[1]) ?? 0
     }
     
-    var invalidIDSum: Int {
+    func invalidIDSum(isComplexPattern: Bool = false) -> Int {
         var result = 0
         for id in start...finish {
             let stringID = String(id)
-            if stringID.count % 2 == 0 {
-                let firstString = String(stringID.prefix(stringID.count / 2))
-                let secondString = String(stringID.suffix(stringID.count / 2))
-                if firstString == secondString {
+            if isComplexPattern {
+                if stringID.hasRepeatingComplexPattern {
+                    result += id
+                }
+            } else {
+                if stringID.hasRepeatingPattern {
                     result += id
                 }
             }
         }
         return result
+    }
+}
+
+extension String {
+    
+    var hasRepeatingPattern: Bool {
+        guard let regex = try? Regex("^(.+)(?:\\1){1}$") else { return false }
+        return ranges(of: regex).count > 0
+    }
+    
+    var hasRepeatingComplexPattern: Bool {
+        guard let regex = try? Regex("^(.+)(?:\\1)+$") else { return false }
+        return ranges(of: regex).count > 0
     }
 }
 
