@@ -33,25 +33,35 @@ struct DialTests {
     
     @Test func testRotations() {
         var dial = Dial(position: 50)
-        dial.rotate(rotation: .left, number: 68)
+        dial.rotate(direction: .left, rotation: 68)
         #expect(dial.position == 82)
-        dial.rotate(rotation: .left, number: 30)
+        dial.rotate(direction: .left, rotation: 30)
         #expect(dial.position == 52)
-        dial.rotate(rotation: .right, number: 48)
+        dial.rotate(direction: .right, rotation: 48)
         #expect(dial.position == 0)
-        dial.rotate(rotation: .left, number: 5)
+        dial.rotate(direction: .left, rotation: 5)
         #expect(dial.position == 95)
-        dial.rotate(rotation: .right, number: 60)
+        dial.rotate(direction: .right, rotation: 60)
         #expect(dial.position == 55)
-        dial.rotate(rotation: .left, number: 55)
+        dial.rotate(direction: .left, rotation: 55)
         #expect(dial.position == 0)
+        dial.rotate(direction: .left, rotation: 896)
+        #expect(dial.position == 4)
     }
     
-    @Test func testCrazyRotations1() {
+    @Test func testBigRotations1() {
         var dial = Dial(position: 5)
-        dial.rotate(rotation: .left, number: 346)
-        #expect(dial.position == 41)
-        dial.rotate(rotation: .right, number: 746)
-        #expect(dial.position == 87)
+        var numberOfZeros = dial.rotate(direction: .left, rotation: 346)
+        #expect(dial.position == 59)
+        #expect(numberOfZeros == 4)
+        numberOfZeros = dial.rotate(direction: .right, rotation: 746)
+        #expect(dial.position == 5)
+        #expect(numberOfZeros == 8)
+        numberOfZeros = dial.rotate(direction: .right, rotation: 45)
+        #expect(dial.position == 50)
+        #expect(numberOfZeros == 0)
+        numberOfZeros = dial.rotate(direction: .right, rotation: 1000)
+        #expect(dial.position == 50)
+        #expect(numberOfZeros == 10)
     }
 }
