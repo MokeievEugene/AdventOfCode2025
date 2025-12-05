@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     let viewModel = ContentViewModel()
+    
     @State var dialPassword: Int?
     @State var dialHardPassword: Int?
     @State var invalidIDSum: Int?
@@ -17,74 +18,94 @@ struct ContentView: View {
     @State var totalJoltageMax12: Int?
     @State var accessibleRollsOfPaper: Int?
     @State var removableRollsOfPaper: Int?
+    @State var freshIngredientsCount: Int?
+    @State var allFreshIngredientsIDsCount: Int?
     
     var body: some View {
-        VStack(alignment: .center, spacing: 10) {
-            Text("🎅 ADVENT OF CODING 2025 🎄")
-                .foregroundStyle(.green)
-            dayView(
-                dayNumber: 1,
-                partNumber: 1,
-                valueName: "dial password",
-                value: dialPassword
-            ) {
-                dialPassword = viewModel.calculateDialPassword()
-            }
-            dayView(
-                dayNumber: 1,
-                partNumber: 2,
-                valueName: "dial hard password",
-                value: dialHardPassword
-            ) {
-                dialHardPassword = viewModel.calculateDialHardPassword()
-            }
-            dayView(
-                dayNumber: 2,
-                partNumber: 1,
-                valueName: "invalid id sum",
-                value: invalidIDSum
-            ) {
-                invalidIDSum = viewModel.calculateInvalidIDSum()
-            }
-            dayView(
-                dayNumber: 2,
-                partNumber: 2,
-                valueName: "invalid id sum",
-                value: complexInvalidIDSum
-            ) {
-                complexInvalidIDSum = viewModel.calculateComplexInvalidIDSum()
-            }
-            dayView(
-                dayNumber: 3,
-                partNumber: 1,
-                valueName: "total joltage",
-                value: totalJoltageMax2
-            ) {
-                totalJoltageMax2 = viewModel.calculateTotalJoltageMax2()
-            }
-            dayView(
-                dayNumber: 3,
-                partNumber: 2,
-                valueName: "total joltage",
-                value: totalJoltageMax12
-            ) {
-                totalJoltageMax12 = viewModel.calculateTotalJoltageMax12()
-            }
-            dayView(
-                dayNumber: 4,
-                partNumber: 1,
-                valueName: "accessible rolls of paper",
-                value: accessibleRollsOfPaper
-            ) {
-                accessibleRollsOfPaper = viewModel.calculateAccessibleRollsOfPaper()
-            }
-            dayView(
-                dayNumber: 4,
-                partNumber: 2,
-                valueName: "removable rolls of paper",
-                value: removableRollsOfPaper
-            ) {
-                removableRollsOfPaper = viewModel.calculateRemovableRollsOfPaper()
+        ScrollView {
+            VStack(alignment: .center, spacing: 10) {
+                Text("🎅 ADVENT OF CODING 2025 🎄")
+                    .foregroundStyle(.green)
+                dayView(
+                    dayNumber: 1,
+                    partNumber: 1,
+                    valueName: "dial password",
+                    value: dialPassword
+                ) {
+                    dialPassword = viewModel.calculateDialPassword()
+                }
+                dayView(
+                    dayNumber: 1,
+                    partNumber: 2,
+                    valueName: "dial hard password",
+                    value: dialHardPassword
+                ) {
+                    dialHardPassword = viewModel.calculateDialPassword(hardMode: true)
+                }
+                dayView(
+                    dayNumber: 2,
+                    partNumber: 1,
+                    valueName: "invalid id sum",
+                    value: invalidIDSum
+                ) {
+                    invalidIDSum = viewModel.calculateInvalidIDSum()
+                }
+                dayView(
+                    dayNumber: 2,
+                    partNumber: 2,
+                    valueName: "complex invalid id sum",
+                    value: complexInvalidIDSum
+                ) {
+                    complexInvalidIDSum = viewModel.calculateInvalidIDSum(isComplexPattern: true)
+                }
+                dayView(
+                    dayNumber: 3,
+                    partNumber: 1,
+                    valueName: "total joltage",
+                    value: totalJoltageMax2
+                ) {
+                    totalJoltageMax2 = viewModel.calculateTotalJoltage(joltageLimit: 2)
+                }
+                dayView(
+                    dayNumber: 3,
+                    partNumber: 2,
+                    valueName: "total joltage",
+                    value: totalJoltageMax12
+                ) {
+                    totalJoltageMax12 = viewModel.calculateTotalJoltage(joltageLimit: 12)
+                }
+                dayView(
+                    dayNumber: 4,
+                    partNumber: 1,
+                    valueName: "accessible rolls of paper",
+                    value: accessibleRollsOfPaper
+                ) {
+                    accessibleRollsOfPaper = viewModel.calculateAccessibleRollsOfPaper()
+                }
+                dayView(
+                    dayNumber: 4,
+                    partNumber: 2,
+                    valueName: "removable rolls of paper",
+                    value: removableRollsOfPaper
+                ) {
+                    removableRollsOfPaper = viewModel.calculateRemovableRollsOfPaper()
+                }
+                dayView(
+                    dayNumber: 5,
+                    partNumber: 1,
+                    valueName: "fresh ingredients count",
+                    value: freshIngredientsCount
+                ) {
+                    freshIngredientsCount = viewModel.calculateFreshIngredientsCount()
+                }
+                dayView(
+                    dayNumber: 5,
+                    partNumber: 2,
+                    valueName: "all fresh ingredients ids count",
+                    value: allFreshIngredientsIDsCount
+                ) {
+                    allFreshIngredientsIDsCount = viewModel.calculateAllFreshIngredientsIDsCount()
+                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

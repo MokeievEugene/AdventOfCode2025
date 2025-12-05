@@ -9,66 +9,33 @@ import Foundation
 
 struct ContentViewModel {
     
-    func calculateDialPassword() -> Int {
+    func calculateDialPassword(hardMode: Bool = false) -> Int {
         guard let fileContents = loadFile(name: "commandInput", fileExtension: "txt") else { return 0 }
         let commandArray = fileContents.split(separator: "\n").map { String($0) }
         var dial = Dial(position: 50)
-        return dial.rotate(with: commandArray)
+        return dial.rotate(with: commandArray, hardMode: hardMode)
     }
     
-    func calculateDialHardPassword() -> Int {
-        guard let fileContents = loadFile(name: "commandInput", fileExtension: "txt") else { return 0 }
-        let commandArray = fileContents.split(separator: "\n").map { String($0) }
-        var dial = Dial(position: 50)
-        return dial.rotate(with: commandArray, hardMode: true)
-    }
-    
-    func calculateInvalidIDSum() -> Int {
+    func calculateInvalidIDSum(isComplexPattern: Bool = false) -> Int {
         guard var fileContents = loadFile(name: "giftProductIDs", fileExtension: "txt") else { return 0 }
         fileContents = String(fileContents.dropLast(1))
         let rangeArray = fileContents.split(separator: ",").map { String($0) }
         var invalidIDSum = 0
         rangeArray.forEach { rawRange in
-            let range = ProductIDRange(rawString: rawRange)
-            invalidIDSum += range.invalidIDSum()
+            let range = IDRange(rawString: rawRange)
+            invalidIDSum += range.invalidIDSum(isComplexPattern: isComplexPattern)
         }
         
         return invalidIDSum
     }
     
-    func calculateComplexInvalidIDSum() -> Int {
-        guard var fileContents = loadFile(name: "giftProductIDs", fileExtension: "txt") else { return 0 }
-        fileContents = String(fileContents.dropLast(1))
-        let rangeArray = fileContents.split(separator: ",").map { String($0) }
-        var invalidIDSum = 0
-        rangeArray.forEach { rawRange in
-            let range = ProductIDRange(rawString: rawRange)
-            invalidIDSum += range.invalidIDSum(isComplexPattern: true)
-        }
-        
-        return invalidIDSum
-    }
-    
-    func calculateTotalJoltageMax2() -> Int {
+    func calculateTotalJoltage(joltageLimit: Int) -> Int {
         guard let fileContents = loadFile(name: "batteries", fileExtension: "txt") else { return 0 }
         let batteriesArray = fileContents.split(separator: "\n").map { String($0) }
         var totalJoltage = 0
         
         batteriesArray.forEach { bank in
-            let battery = Battery(bank: bank, joltageLimit: 2)
-            totalJoltage += battery.maximumJoltage
-        }
-        
-        return totalJoltage
-    }
-    
-    func calculateTotalJoltageMax12() -> Int {
-        guard let fileContents = loadFile(name: "batteries", fileExtension: "txt") else { return 0 }
-        let batteriesArray = fileContents.split(separator: "\n").map { String($0) }
-        var totalJoltage = 0
-        
-        batteriesArray.forEach { bank in
-            let battery = Battery(bank: bank, joltageLimit: 12)
+            let battery = Battery(bank: bank, joltageLimit: joltageLimit)
             totalJoltage += battery.maximumJoltage
         }
         
@@ -88,6 +55,34 @@ struct ContentViewModel {
         let matrix = PaperMatrix(rawString: fileContents)
         let cleaner = MatrixCleaner(matrix: matrix)
         return cleaner.cleanAllRemovableRollsOfPaper()
+    }
+    
+    func calculateFreshIngredientsCount() -> Int {
+        guard var fileContents = loadFile(name: "ingredientIDs", fileExtension: "txt") else { return 0 }
+        fileContents = String(fileContents)
+        let split = fileContents.split(separator: "\n\n")
+        let rawRanges = split[0].split(separator: "\n").map { String($0) }
+        let ingredientIDS = split[1].split(separator: "\n").map { Int($0) ?? 0 }
+        let ranges = rawRanges
+            .map { IDRange(rawString: $0) }
+            .map { $0.start...$0.finish }
+        let ingredientChecker = IngredientChecker(freshRanges: ranges, ingredientIDS: ingredientIDS)
+        
+        return ingredientChecker.amountOfFreshIngredients
+    }
+    
+    func calculateAllFreshIngredientsIDsCount() -> Int {
+        guard var fileContents = loadFile(name: "ingredientIDs", fileExtension: "txt") else { return 0 }
+        fileContents = String(fileContents)
+        let split = fileContents.split(separator: "\n\n")
+        let rawRanges = split[0].split(separator: "\n").map { String($0) }
+        let ingredientIDS = split[1].split(separator: "\n").map { Int($0) ?? 0 }
+        let ranges = rawRanges
+            .map { IDRange(rawString: $0) }
+            .map { $0.start...$0.finish }
+        let ingredientChecker = IngredientChecker(freshRanges: ranges, ingredientIDS: ingredientIDS)
+        
+        return ingredientChecker.amountOfFreshIngredientIDS
     }
     
     // MARK: - Private

@@ -1,11 +1,11 @@
 //
-//  ProductIDRange.swift
+//  IDRange.swift
 //  CodeAdvent
 //
 //  Created by Eugene Mokeiev on 03.12.2025.
 //
 
-struct ProductIDRange {
+struct IDRange {
     let start: Int
     let finish: Int
     
