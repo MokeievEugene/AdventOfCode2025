@@ -21,8 +21,22 @@ struct IngredientChecker {
     }
     
     var amountOfFreshIngredientIDS: Int {
-        let sortedRanges = freshRanges.sorted { $0.lowerBound < $1.lowerBound }
+        var sortedRanges = freshRanges.sorted { $0.lowerBound < $1.lowerBound }
         var totalFreshIDs = sortedRanges[0].count
+        
+        sortedRanges = sortedRanges.filter({ range in
+            for otherRange in sortedRanges {
+                if otherRange != range, otherRange.contains(range) {
+                    print("LOG: range \(range) filtered")
+                    return false
+                }
+            }
+            return true
+        })
+        
+        guard sortedRanges.count > 1 else {
+            return totalFreshIDs
+        }
         
         for index in 1..<sortedRanges.count {
             let previousRange = sortedRanges[index - 1]
@@ -47,5 +61,11 @@ struct IngredientChecker {
             }
         }
         return false
+    }
+}
+
+extension ClosedRange where Bound: Comparable {
+    func contains(_ otherRange: ClosedRange<Bound>) -> Bool {
+        return self.lowerBound <= otherRange.lowerBound && self.upperBound >= otherRange.upperBound
     }
 }

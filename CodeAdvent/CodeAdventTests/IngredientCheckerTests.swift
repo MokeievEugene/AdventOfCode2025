@@ -23,5 +23,11 @@ struct IngredientCheckerTests {
         
         checker = IngredientChecker(freshRanges: [3...5, 10...14, 16...20, 12...18], ingredientIDS: [])
         #expect(checker.amountOfFreshIngredientIDS == 14)
+        
+        checker = IngredientChecker(freshRanges: [10...11, 11...14, 11...20, 12...18], ingredientIDS: [])
+        #expect(checker.amountOfFreshIngredientIDS == 11)
+        
+        checker = IngredientChecker(freshRanges: [10...11, 13...15, 14...16, 11...14, 11...20, 12...18], ingredientIDS: [])
+        #expect(checker.amountOfFreshIngredientIDS == 11)
     }
 }
