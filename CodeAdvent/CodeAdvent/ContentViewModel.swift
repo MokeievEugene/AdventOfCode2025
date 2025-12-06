@@ -85,6 +85,10 @@ struct ContentViewModel {
         return ingredientChecker.amountOfFreshIngredientIDS
     }
     
+    func calculateMathProblemsSolutionSum() -> Int {
+        return 0
+    }
+    
     // MARK: - Private
     private func loadFile(name: String, fileExtension: String) -> String? {
         let fileURL = Bundle.main.url(forResource: name, withExtension: fileExtension)!

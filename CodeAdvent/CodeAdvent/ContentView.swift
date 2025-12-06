@@ -20,6 +20,7 @@ struct ContentView: View {
     @State var removableRollsOfPaper: Int?
     @State var freshIngredientsCount: Int?
     @State var allFreshIngredientsIDsCount: Int?
+    @State var mathProblemsSolutionSum: Int?
     
     var body: some View {
         ScrollView {
@@ -106,6 +107,14 @@ struct ContentView: View {
                 ) {
                     allFreshIngredientsIDsCount = viewModel.calculateAllFreshIngredientsIDsCount()
                 }
+                dayView(
+                    dayNumber: 6,
+                    partNumber: 1,
+                    valueName: "math problems solution sum",
+                    value: mathProblemsSolutionSum
+                ) {
+                    mathProblemsSolutionSum = viewModel.calculateMathProblemsSolutionSum()
+                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -114,18 +123,13 @@ struct ContentView: View {
     
     private func dayView(
         dayNumber: Int,
-        partNumber: Int? = nil,
+        partNumber: Int,
         valueName: String,
         value: Int?,
         action: @escaping () -> Void
     ) -> some View {
         VStack {
-            HStack(spacing: 0) {
-                Text("DAY \(dayNumber)")
-                if let partNumber {
-                    Text(", PART \(partNumber)")
-                }
-            }
+            Text("DAY \(dayNumber), PART \(partNumber)")
             .foregroundStyle(.red)
             Button {
                 action()
