@@ -21,6 +21,7 @@ struct ContentView: View {
     @State var freshIngredientsCount: Int?
     @State var allFreshIngredientsIDsCount: Int?
     @State var mathProblemsSolutionSum: Int?
+    @State var hardMathProblemsSolutionSum: Int?
     
     var body: some View {
         ScrollView {
@@ -114,6 +115,14 @@ struct ContentView: View {
                     value: mathProblemsSolutionSum
                 ) {
                     mathProblemsSolutionSum = viewModel.calculateMathProblemsSolutionSum()
+                }
+                dayView(
+                    dayNumber: 6,
+                    partNumber: 2,
+                    valueName: "hard math problems solution sum",
+                    value: hardMathProblemsSolutionSum
+                ) {
+                    hardMathProblemsSolutionSum = viewModel.calculateMathProblemsSolutionSum(hardMathMode: true)
                 }
             }
         }

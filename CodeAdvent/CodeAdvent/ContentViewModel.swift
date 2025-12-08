@@ -88,8 +88,8 @@ struct ContentViewModel {
     func calculateMathProblemsSolutionSum(hardMathMode: Bool = false) -> Int {
         guard var fileContents = loadFile(name: "mathProblems", fileExtension: "txt") else { return 0 }
         fileContents = String(fileContents)
-        let matrix = MathProblemMatrix(rawString: fileContents)
-        return matrix.problemsSolutionSum(hardMathMode: hardMathMode)
+        let matrix = MathProblemMatrix(rawString: fileContents, hardMathMode: hardMathMode)
+        return matrix.problemsSolutionSum
     }
     
     // MARK: - Private
