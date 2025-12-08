@@ -85,8 +85,11 @@ struct ContentViewModel {
         return ingredientChecker.amountOfFreshIngredientIDS
     }
     
-    func calculateMathProblemsSolutionSum() -> Int {
-        return 0
+    func calculateMathProblemsSolutionSum(hardMathMode: Bool = false) -> Int {
+        guard var fileContents = loadFile(name: "mathProblems", fileExtension: "txt") else { return 0 }
+        fileContents = String(fileContents)
+        let matrix = MathProblemMatrix(rawString: fileContents)
+        return matrix.problemsSolutionSum(hardMathMode: hardMathMode)
     }
     
     // MARK: - Private
