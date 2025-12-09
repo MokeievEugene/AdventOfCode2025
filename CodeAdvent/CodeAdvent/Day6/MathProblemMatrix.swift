@@ -95,13 +95,9 @@ struct MathProblemMatrix {
     private func performOperation(mathOperator: String, numbers: [Int]) -> Int {
         switch mathOperator {
         case "+":
-            return numbers.reduce(0) { partialResult, total in
-                total + partialResult
-            }
+            return numbers.reduce(0, +)
         case "*":
-            return numbers.reduce(1) { partialResult, total in
-                total * partialResult
-            }
+            return numbers.reduce(1, *)
         default:
             return 0
         }
