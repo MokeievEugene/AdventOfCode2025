@@ -12,13 +12,13 @@ import Foundation
 struct IDRangeTests {
     
     @Test func testRepeatingPattern() {
-        let range = IDRange(rawString: "95-115")
-        #expect(range.invalidIDSum() == 99)
+        let sut = IDRange(rawString: "95-115")
+        #expect(sut.invalidIDSum() == 99)
     }
     
     @Test func testComplexRepeatingPattern() {
-        let range = IDRange(rawString: "824824821-824824827")
-        #expect(range.invalidIDSum(isComplexPattern: true) == 824824824)
+        let sut = IDRange(rawString: "824824821-824824827")
+        #expect(sut.invalidIDSum(isComplexPattern: true) == 824824824)
     }
 }
 

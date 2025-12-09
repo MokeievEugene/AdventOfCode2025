@@ -12,12 +12,12 @@ import Foundation
 struct MathProblemMatrixTests {
     
     @Test func testProblemsSolutionSum() {
-        let matrix = MathProblemMatrix(columns: [[123, 45, 6], [328, 64, 98], [51, 387, 215], [64, 23, 314]], mathOperators: ["*", "+", "*", "+"])
-        #expect(matrix.problemsSolutionSum == 4277556)
+        let sut = MathProblemMatrix(columns: [[123, 45, 6], [328, 64, 98], [51, 387, 215], [64, 23, 314]], mathOperators: ["*", "+", "*", "+"])
+        #expect(sut.problemsSolutionSum == 4277556)
     }
     
     @Test func testProblemsSolutionSumHardMode() {
-        let matrix = MathProblemMatrix(
+        let sut = MathProblemMatrix(
             rawString: """
                 123 328  51 64 
                  45 64  387 23 
@@ -26,6 +26,6 @@ struct MathProblemMatrixTests {
                 """,
             hardMathMode: true
         )
-        #expect(matrix.problemsSolutionSum == 3263827)
+        #expect(sut.problemsSolutionSum == 3263827)
     }
 }

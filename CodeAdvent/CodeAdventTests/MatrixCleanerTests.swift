@@ -25,7 +25,7 @@ struct MatrixCleanerTests {
                      @.@.@@@.@.
                      """
         )
-        let cleaner = MatrixCleaner(matrix: matrix)
-        #expect(cleaner.cleanAllRemovableRollsOfPaper() == 43)
+        let sut = MatrixCleaner(matrix: matrix)
+        #expect(sut.cleanAllRemovableRollsOfPaper() == 43)
     }
 }

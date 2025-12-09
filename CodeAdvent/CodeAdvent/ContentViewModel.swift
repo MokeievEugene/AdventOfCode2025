@@ -92,6 +92,13 @@ struct ContentViewModel {
         return matrix.problemsSolutionSum
     }
     
+    func calculateTeleporterBeamsCount()-> Int {
+        guard var fileContents = loadFile(name: "manifold", fileExtension: "txt") else { return 0 }
+        fileContents = String(fileContents)
+        let manifoldRayCounter = ManifoldRayCounter(rawString: fileContents)
+        return manifoldRayCounter.numberOfBeamSplits
+    }
+    
     // MARK: - Private
     private func loadFile(name: String, fileExtension: String) -> String? {
         let fileURL = Bundle.main.url(forResource: name, withExtension: fileExtension)!
