@@ -23,6 +23,7 @@ struct ContentView: View {
     @State var mathProblemsSolutionSum: Int?
     @State var hardMathProblemsSolutionSum: Int?
     @State var teleporterBeamsCount: Int?
+    @State var teleporterTimelinesCount: Int?
     
     var body: some View {
         ScrollView {
@@ -132,6 +133,14 @@ struct ContentView: View {
                     value: teleporterBeamsCount
                 ) {
                     teleporterBeamsCount = viewModel.calculateTeleporterBeamsCount()
+                }
+                dayView(
+                    dayNumber: 7,
+                    partNumber: 2,
+                    valueName: "teleporter timelines count",
+                    value: teleporterTimelinesCount
+                ) {
+                    teleporterTimelinesCount = viewModel.calculateTeleporterTimelinesCount()
                 }
             }
         }
