@@ -67,8 +67,9 @@ struct CircuitConnector {
         
         var allowedConnections = numberOfConnections
         
-        while allowedConnections > 1 {
+        while allowedConnections > 0 {
             let nextDictionary = sortedDictionaries.first
+            sortedDictionaries.removeAll { $0.key == nextDictionary?.key }
             
             guard let box1 = nextDictionary?.key.box1,
                   let box2 = nextDictionary?.key.box2 else {
@@ -84,21 +85,11 @@ struct CircuitConnector {
                 print("LOG: merged \(firstBoxCircuit) with the circuit \(secondBoxCircuit)")
                 firstBoxCircuit.merge(secondBoxCircuit)
                 circuits.removeAll { $0 == secondBoxCircuit }
-                
-                for index1 in 0..<firstBoxCircuit.connectedBoxes.count {
-                    for index2 in index1+1..<firstBoxCircuit.connectedBoxes.count {
-                        let circuitBox1 = firstBoxCircuit.connectedBoxes[index1]
-                        let circuitBox2 = firstBoxCircuit.connectedBoxes[index2]
-                        let pair = JunctionBoxesPair(box1: circuitBox1, box2: circuitBox2)
-                        sortedDictionaries.removeAll { $0.key == pair }
-                    }
-                }
-                
-                allowedConnections -= 1
                 print("LOG: connections remaining: \(allowedConnections)")
             } else {
                 print("LOG: boxes \(box1) and \(box2) are in the same circuit")
             }
+            allowedConnections -= 1
         }
         
         let firstThreeSortedCircuits = circuits.sorted().suffix(3)
