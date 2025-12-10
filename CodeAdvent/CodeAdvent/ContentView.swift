@@ -24,6 +24,7 @@ struct ContentView: View {
     @State var hardMathProblemsSolutionSum: Int?
     @State var teleporterBeamsCount: Int?
     @State var teleporterTimelinesCount: Int?
+    @State var circuitSizes: Int?
     
     var body: some View {
         ScrollView {
@@ -141,6 +142,14 @@ struct ContentView: View {
                     value: teleporterTimelinesCount
                 ) {
                     teleporterTimelinesCount = viewModel.calculateTeleporterTimelinesCount()
+                }
+                dayView(
+                    dayNumber: 8,
+                    partNumber: 1,
+                    valueName: "junction boxes circuit sizes",
+                    value: circuitSizes
+                ) {
+                    circuitSizes = viewModel.calculateCircuitSizes()
                 }
             }
         }

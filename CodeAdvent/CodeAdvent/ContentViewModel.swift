@@ -106,6 +106,13 @@ struct ContentViewModel {
         return manifoldRayCounter.numberOfTimelines
     }
     
+    func calculateCircuitSizes()-> Int {
+        guard var fileContents = loadFile(name: "junctionBoxes", fileExtension: "txt") else { return 0 }
+        fileContents = String(fileContents)
+        let circuitConnector = CircuitConnector(rawString: fileContents, numberOfConnections: 1000)
+        return circuitConnector.threeLargestCircuitsMultiplied
+    }
+    
     // MARK: - Private
     private func loadFile(name: String, fileExtension: String) -> String? {
         let fileURL = Bundle.main.url(forResource: name, withExtension: fileExtension)!
