@@ -7,19 +7,22 @@
 
 import Foundation
 
-class Circuit: Equatable, Comparable {
+class Circuit: Equatable, Comparable, CustomStringConvertible {
+    
     var connectedBoxes: [JunctionBox]
     
     init(connectedBoxes: [JunctionBox]) {
         self.connectedBoxes = connectedBoxes
     }
     
-    func addBox(_ box: JunctionBox){
-        connectedBoxes.append(box)
+    func merge(_ otherCircuit: Circuit){
+        connectedBoxes.append(contentsOf: otherCircuit.connectedBoxes)
+        let uniqueBoxes = Set(connectedBoxes)
+        connectedBoxes = Array(uniqueBoxes)
     }
     
-    func removeBox(_ box: JunctionBox){
-        connectedBoxes.removeAll { $0 == box }
+    var description: String {
+        connectedBoxes.reduce(into: "") { $0 = $0 + " Box " + String($1.coordinates.map {String($0)}.joined(separator: ",")) }
     }
     
     static func == (lhs: Circuit, rhs: Circuit) -> Bool {
@@ -35,9 +38,14 @@ struct JunctionBox: Hashable {
     let coordinates: [Int]
 }
 
-struct JunctionBoxesPair: Hashable {
+struct JunctionBoxesPair: Equatable, Hashable {
     let box1: JunctionBox
     let box2: JunctionBox
+    
+    static func == (lhs: JunctionBoxesPair, rhs: JunctionBoxesPair) -> Bool {
+        lhs.box1 == rhs.box1 && lhs.box2 == rhs.box2 ||
+        lhs.box1 == rhs.box2 && lhs.box2 == rhs.box1
+    }
 }
 
 struct CircuitConnector {
@@ -55,13 +63,12 @@ struct CircuitConnector {
     var threeLargestCircuitsMultiplied: Int {
         let distancesMap = populateDistances()
         var sortedDictionaries = distancesMap.sorted { $0.value < $1.value }
-        let circuits: [Circuit] = junctionBoxes.map { Circuit(connectedBoxes: [$0]) }
+        var circuits: [Circuit] = junctionBoxes.map { Circuit(connectedBoxes: [$0]) }
         
         var allowedConnections = numberOfConnections
         
-        while allowedConnections > 0 {
+        while allowedConnections > 1 {
             let nextDictionary = sortedDictionaries.first
-            sortedDictionaries.removeAll { $0.key == nextDictionary?.key }
             
             guard let box1 = nextDictionary?.key.box1,
                   let box2 = nextDictionary?.key.box2 else {
@@ -74,19 +81,23 @@ struct CircuitConnector {
             }
             
             if firstBoxCircuit != secondBoxCircuit {
-                if firstBoxCircuit >= secondBoxCircuit {
-                    firstBoxCircuit.addBox(box2)
-                    secondBoxCircuit.removeBox(box2)
-                    print("LOG: added \(box2) to the circuit of \(box1)")
-                } else if secondBoxCircuit >= firstBoxCircuit {
-                    secondBoxCircuit.addBox(box1)
-                    firstBoxCircuit.removeBox(box1)
-                    print("LOG: added \(box1) to the circuit of \(box2)")
+                print("LOG: merged \(firstBoxCircuit) with the circuit \(secondBoxCircuit)")
+                firstBoxCircuit.merge(secondBoxCircuit)
+                circuits.removeAll { $0 == secondBoxCircuit }
+                
+                for index1 in 0..<firstBoxCircuit.connectedBoxes.count {
+                    for index2 in index1+1..<firstBoxCircuit.connectedBoxes.count {
+                        let circuitBox1 = firstBoxCircuit.connectedBoxes[index1]
+                        let circuitBox2 = firstBoxCircuit.connectedBoxes[index2]
+                        let pair = JunctionBoxesPair(box1: circuitBox1, box2: circuitBox2)
+                        sortedDictionaries.removeAll { $0.key == pair }
+                    }
                 }
+                
                 allowedConnections -= 1
                 print("LOG: connections remaining: \(allowedConnections)")
             } else {
-                print("LOG: boxes \(box1) and \(box2) in the same circuit")
+                print("LOG: boxes \(box1) and \(box2) are in the same circuit")
             }
         }
         
