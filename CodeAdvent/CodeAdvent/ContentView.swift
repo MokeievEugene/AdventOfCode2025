@@ -25,6 +25,7 @@ struct ContentView: View {
     @State var teleporterBeamsCount: Int?
     @State var teleporterTimelinesCount: Int?
     @State var circuitSizes: Int?
+    @State var lastPairCoordinates: Int?
     
     var body: some View {
         ScrollView {
@@ -150,6 +151,14 @@ struct ContentView: View {
                     value: circuitSizes
                 ) {
                     circuitSizes = viewModel.calculateCircuitSizes()
+                }
+                dayView(
+                    dayNumber: 8,
+                    partNumber: 2,
+                    valueName: "last boxes pair coordinates",
+                    value: lastPairCoordinates
+                ) {
+                    lastPairCoordinates = viewModel.calculateLastPairCoordinates()
                 }
             }
         }

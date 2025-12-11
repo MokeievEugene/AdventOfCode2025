@@ -69,8 +69,8 @@ struct CircuitConnector {
         
         while allowedConnections > 0 {
             let nextDictionary = sortedDictionaries.first
-            sortedDictionaries.removeAll { $0.key == nextDictionary?.key }
-            
+            sortedDictionaries = Array(sortedDictionaries.dropFirst())
+
             guard let box1 = nextDictionary?.key.box1,
                   let box2 = nextDictionary?.key.box2 else {
                 continue
@@ -97,6 +97,43 @@ struct CircuitConnector {
             .map { $0.connectedBoxes.count }
             .reduce(1, *)
         return multiplication
+    }
+    
+    var coordinatesOfTheLastPair: Int {
+        let distancesMap = populateDistances()
+        var sortedDictionaries = distancesMap.sorted { $0.value < $1.value }
+        var circuits: [Circuit] = junctionBoxes.map { Circuit(connectedBoxes: [$0]) }
+        var lastPair: JunctionBoxesPair?
+        
+        while circuits.count > 1 {
+            let nextDictionary = sortedDictionaries.first
+            sortedDictionaries = Array(sortedDictionaries.dropFirst())
+            
+            guard let box1 = nextDictionary?.key.box1,
+                  let box2 = nextDictionary?.key.box2 else {
+                continue
+            }
+            
+            guard let firstBoxCircuit = circuits.first(where: { $0.connectedBoxes.contains(box1) }),
+                  let secondBoxCircuit = circuits.first(where: { $0.connectedBoxes.contains(box2) }) else {
+                continue
+            }
+            
+            if firstBoxCircuit != secondBoxCircuit {
+                print("LOG: merged \(firstBoxCircuit) with the circuit \(secondBoxCircuit)")
+                firstBoxCircuit.merge(secondBoxCircuit)
+                circuits.removeAll { $0 == secondBoxCircuit }
+            } else {
+                print("LOG: boxes \(box1) and \(box2) are in the same circuit")
+            }
+            
+            if circuits.count == 1 {
+                lastPair = nextDictionary?.key
+            }
+            print("LOG: number of circuits: \(circuits.count)")
+        }
+        
+        return (lastPair?.box1.coordinates[0] ?? 0) * (lastPair?.box2.coordinates[0] ?? 0)
     }
     
     private func populateDistances() -> [JunctionBoxesPair: Double] {
