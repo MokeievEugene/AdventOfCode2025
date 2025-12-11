@@ -120,6 +120,13 @@ struct ContentViewModel {
         return circuitConnector.coordinatesOfTheLastPair
     }
     
+    func calculateLargestRedRectangle()-> Int {
+        guard var fileContents = loadFile(name: "redTileCoordinates", fileExtension: "txt") else { return 0 }
+        fileContents = String(fileContents)
+        let areaCalculator = AreaCalculator(rawString: fileContents)
+        return areaCalculator.largestArea
+    }
+    
     // MARK: - Private
     private func loadFile(name: String, fileExtension: String) -> String? {
         let fileURL = Bundle.main.url(forResource: name, withExtension: fileExtension)!

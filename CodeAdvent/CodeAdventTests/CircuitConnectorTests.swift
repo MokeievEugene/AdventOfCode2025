@@ -12,7 +12,7 @@ import Foundation
 struct CircuitConnectorTests {
     
     @Test func testThreeLargestCircuitsMultiplied() {
-        let circuitConnector = CircuitConnector(
+        let sut = CircuitConnector(
             rawString: """
                 162,817,812
                 57,618,57
@@ -37,11 +37,11 @@ struct CircuitConnectorTests {
                 """,
             numberOfConnections: 10
         )
-        #expect(circuitConnector.threeLargestCircuitsMultiplied == 40)
+        #expect(sut.threeLargestCircuitsMultiplied == 40)
     }
     
     @Test func testCoordinatesOfTheLastPair() {
-        let circuitConnector = CircuitConnector(
+        let sut = CircuitConnector(
             rawString: """
                 162,817,812
                 57,618,57
@@ -66,7 +66,7 @@ struct CircuitConnectorTests {
                 """,
             numberOfConnections: 10
         )
-        #expect(circuitConnector.coordinatesOfTheLastPair == 25272)
+        #expect(sut.coordinatesOfTheLastPair == 25272)
     }
 }
 

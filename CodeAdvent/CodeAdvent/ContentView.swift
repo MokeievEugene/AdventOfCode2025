@@ -26,6 +26,7 @@ struct ContentView: View {
     @State var teleporterTimelinesCount: Int?
     @State var circuitSizes: Int?
     @State var lastPairCoordinates: Int?
+    @State var largestRedRectangle: Int?
     
     var body: some View {
         ScrollView {
@@ -159,6 +160,14 @@ struct ContentView: View {
                     value: lastPairCoordinates
                 ) {
                     lastPairCoordinates = viewModel.calculateLastPairCoordinates()
+                }
+                dayView(
+                    dayNumber: 9,
+                    partNumber: 1,
+                    valueName: "largest red rectangle",
+                    value: largestRedRectangle
+                ) {
+                    largestRedRectangle = viewModel.calculateLargestRedRectangle()
                 }
             }
         }
