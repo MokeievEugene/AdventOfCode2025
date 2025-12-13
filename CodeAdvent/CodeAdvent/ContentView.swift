@@ -27,6 +27,7 @@ struct ContentView: View {
     @State var circuitSizes: Int?
     @State var lastPairCoordinates: Int?
     @State var largestRedRectangle: Int?
+    @State var largestGreenRectangle: Int?
     
     var body: some View {
         ScrollView {
@@ -168,6 +169,14 @@ struct ContentView: View {
                     value: largestRedRectangle
                 ) {
                     largestRedRectangle = viewModel.calculateLargestRedRectangle()
+                }
+                dayView(
+                    dayNumber: 9,
+                    partNumber: 2,
+                    valueName: "largest green rectangle",
+                    value: largestGreenRectangle
+                ) {
+                    largestGreenRectangle = viewModel.calculateLargestGreenRectangle()
                 }
             }
         }

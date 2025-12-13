@@ -26,6 +26,20 @@ struct AreaCalculatorTests {
         )
         #expect(sut.largestArea == 50)
     }
+    
+    @Test func testLargestGreenArea() {
+        var sut = AreaCalculator(
+            rawString: """
+                7,1
+                11,1
+                11,7
+                9,7
+                9,5
+                2,5
+                2,3
+                7,3
+                """
+        )
+        #expect(sut.largestGreenArea() == 24)
+    }
 }
-
-

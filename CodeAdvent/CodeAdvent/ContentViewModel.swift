@@ -127,6 +127,13 @@ struct ContentViewModel {
         return areaCalculator.largestArea
     }
     
+    func calculateLargestGreenRectangle()-> Int {
+        guard var fileContents = loadFile(name: "redTileCoordinates", fileExtension: "txt") else { return 0 }
+        fileContents = String(fileContents)
+        var areaCalculator = AreaCalculator(rawString: fileContents)
+        return areaCalculator.largestGreenArea()
+    }
+    
     // MARK: - Private
     private func loadFile(name: String, fileExtension: String) -> String? {
         let fileURL = Bundle.main.url(forResource: name, withExtension: fileExtension)!
