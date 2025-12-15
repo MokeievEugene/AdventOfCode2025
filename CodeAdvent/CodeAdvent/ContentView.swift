@@ -28,6 +28,7 @@ struct ContentView: View {
     @State var lastPairCoordinates: Int?
     @State var largestRedRectangle: Int?
     @State var largestGreenRectangle: Int?
+    @State var minButtonPresses: Int?
     
     var body: some View {
         ScrollView {
@@ -177,6 +178,14 @@ struct ContentView: View {
                     value: largestGreenRectangle
                 ) {
                     largestGreenRectangle = viewModel.calculateLargestGreenRectangle()
+                }
+                dayView(
+                    dayNumber: 10,
+                    partNumber: 1,
+                    valueName: "minimum button presses",
+                    value: minButtonPresses
+                ) {
+                    minButtonPresses = viewModel.calculateMinButtonPresses()
                 }
             }
         }

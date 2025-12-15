@@ -134,6 +134,13 @@ struct ContentViewModel {
         return areaCalculator.largestGreenArea()
     }
     
+    func calculateMinButtonPresses()-> Int {
+        guard var fileContents = loadFile(name: "machineSchematics", fileExtension: "txt") else { return 0 }
+        fileContents = String(fileContents)
+        let machineConfigurator = MachineConfigurator(rawString: fileContents)
+        return machineConfigurator.minButtonPresses
+    }
+    
     // MARK: - Private
     private func loadFile(name: String, fileExtension: String) -> String? {
         let fileURL = Bundle.main.url(forResource: name, withExtension: fileExtension)!
